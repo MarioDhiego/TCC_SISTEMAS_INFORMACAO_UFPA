@@ -370,7 +370,7 @@ DIREITO %>%
   summarise(total = n())
 ################################################################################################
 
-### Total Agrupado/RegiÃ£o: identificar possiveis dados faltantes (NAs) #########################
+### Total Agrupado/Região: identificar possiveis dados faltantes (NAs) #########################
 DIREITO %>% 
   select(REGIAO) %>% 
   group_by(REGIAO) %>% 
@@ -378,7 +378,7 @@ DIREITO %>%
 ################################################################################################
 
 
-### Total Agrupado/RaÃ§a: identificar possiveis dados faltantes (NAs)
+### Total Agrupado/Raça: identificar possiveis dados faltantes (NAs)
 DIREITO %>% 
   select(RACA) %>% 
   group_by(RACA) %>% 
