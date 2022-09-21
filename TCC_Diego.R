@@ -136,14 +136,42 @@ install.packages('MonetDBLite', dependencies = TRUE)
 
 
 ### Filtrar as Variáveis SocioEconômicas #######################################################
-Base_Filtrada = Base_Completa %>% dplyr::select (NT_OBJ_FG,
-                                        CO_GRUPO,
-                                        CO_REGIAO_CURSO,
-                                        QE_I02,
-                                        CO_TURNO_GRADUACAO, 
-                                        TP_SEXO,
-                                        NU_IDADE)
+Base_Filtrada = Base_Completa %>% 
+  dplyr::select (NT_OBJ_FG,
+                CO_IES,
+                CO_CURSO,
+                CO_MUNIC_CURSO,
+                CO_UF_CURSO,
+                CO_GRUPO,
+                CO_REGIAO_CURSO,
+                QE_I02,
+                CO_TURNO_GRADUACAO, 
+                TP_SEXO,
+                NU_IDADE)
 ################################################################################################
+
+
+################################################################################################
+### Descrição das Variáveis ####################################################################
+# CO_IES             : Código da Instituição Ensino Superior(IES);
+# CO_CURSO           : Código do Curso da IES;
+# CO_MUNIC_CURSO     : Código do Município da IES;
+# CO_UF_CURSO        : Código
+#  da UF do Município da IES;
+# CO_REGIA_CURSO     : Código da Regiao Geográfica da IES;
+# QE_I02             : Código da Raça dos Alunos;
+# CO_TURNO_GRADUACAO : Código do Turno de Matrícula dos Alunos;
+# NT_OBJ_FG          : Nota Bruta Total/Prova objetiva/Componente:Formação Geral;
+#################################################################################################
+
+
+### Classificação das Variáveis #################################################################
+# NT_OBJ_FG          : Variável Quantitativa Contínua 
+# CO_GRUPO           : Variável Qualitativa Nominal
+# CO_REGIAO_CURSO    : Variável Qualitativa Nominal
+# QE_I02             : Variável Qualitativa Nominal
+# CO_TURNO_GRADUACAO : Variável Qualitativa Ordinal
+#################################################################################################
 
 
 
@@ -176,15 +204,33 @@ Descritiva
 ################################################################################################
 
 
+### Selecionar uma Instituição: UFPA, UNAMA, CESUPA ############################################
+# Filtrar somente as linhas(alunos) da Instituição (UFPA).
+UFPA_2018 = subset(Base_Completa, Base_Completae$CO_IES == 792);
+################################################################################################
+
+### Selecionar um Município: Belém #############################################################
+# Filtrar somente as linhas(alunos) do Municipio de Belém 
+Belem_enade2018 = subset(Base_Completa, Base_Completa$CO_MUNIC_CURSO == 1501402);
+################################################################################################
+
+
+### Selecionar Uma UF: PA ######################################################################
+# Filtrar somente as linhas(alunos) do PARÁ (UF).
+enade2018 = subset(enade2018, enade2018$CO_UF_CURSO == 15);
+################################################################################################
+
+
+
 ### Selecionar um Curso #######################################################################
 #Filtrando os Dados p/Direito
 DIREITO= Base_Completa %>% filter(CO_GRUPO== 2) 
 
 #Filtrando os Dados p/Sistema de Informação
-SISTEMAS= Base_Filtrada %>% filter(CO_GRUPO== ) 
+SISTEMAS= Base_Filtrada %>% filter(CO_GRUPO== 2) 
 
 #Filtrando os Dados p/Ciência da Computação
-Ciencia_Computacao= Base_Filtrada %>% filter(CO_GRUPO== ) 
+Ciencia_Computacao= Base_Filtrada %>% filter(CO_GRUPO== 2) 
 ################################################################################################
 
 
@@ -195,6 +241,9 @@ write.csv(enade2018, file= "microdados_enade_2018_Direiro.csv")
 write.csv(enade2018, file= "microdados_enade_2018_Sistemas_Informacao.csv")
 write.csv(enade2018, file= "microdados_enade_2018_Ciencias_Computacao.csv")
 ################################################################################################
+
+
+
 
 
 ####################### Transformar o Curso/DIREITO ############################################
@@ -237,7 +286,6 @@ DIREITO = DIREITO %>% mutate(TURNO = case_when(CO_TURNO_GRADUACAO == "1" ~ "Matu
                                                CO_TURNO_GRADUACAO == "3" ~ "Integral",
                                                CO_TURNO_GRADUACAO == "4" ~ "Noturno"))
 ################################################################################################
-
 
 
 ################################################################################################
